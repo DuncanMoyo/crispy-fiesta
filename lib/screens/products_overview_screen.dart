@@ -46,7 +46,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   }
                 },
               );
-            },
+            }, 
           ),
         ],
       ),

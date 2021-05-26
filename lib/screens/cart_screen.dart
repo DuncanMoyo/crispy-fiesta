@@ -59,7 +59,7 @@ class CartScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ),
+          ),  
           SizedBox(
             height: 10,
           ),

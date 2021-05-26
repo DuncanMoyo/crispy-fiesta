@@ -61,9 +61,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               value: cart.itemCount.toString(),
             ),
             child: IconButton(
-              icon: Icon(Icons.shopping_cart),
+              icon: Icon(Icons.shopping_cart,),
               onPressed: () {
-                Navigator.of(context).popAndPushNamed(
+                Navigator.of(context).pushNamed(
                   CartScreen.routeName,
                 );
               },

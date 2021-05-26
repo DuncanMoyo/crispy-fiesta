@@ -12,7 +12,10 @@ class ProductItem extends StatelessWidget {
       context,
       listen: false,
     );
-    final cart = Provider.of<Cart>(context, listen: false,);
+    final cart = Provider.of<Cart>(
+      context,
+      listen: false,
+    );
     // print('Product wont print this');
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -49,7 +52,23 @@ class ProductItem extends StatelessWidget {
           trailing: IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              cart.addItem(product.id, product.price, product.title,);
+              cart.addItem(
+                product.id,
+                product.price,
+                product.title,
+              );
+              Scaffold.of(context).hideCurrentSnackBar();
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Added Item to Cart',
+                  ),
+                  duration: Duration(seconds: 2,),
+                  action: SnackBarAction(label: 'UNDO', onPressed: () {
+                    cart.removeSingleItem(product.id);
+                  },),
+                ),
+              );
             },
             color: Theme.of(context).accentColor,
           ),

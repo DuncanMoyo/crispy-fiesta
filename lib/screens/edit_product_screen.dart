@@ -76,6 +76,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
               !_imageUrlController.text.startsWith('https')) ||
           (!_imageUrlController.text.endsWith('.png') &&
               !_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('=CAU') &&
               !_imageUrlController.text.endsWith('.jpeg'))) {
         return;
       }
@@ -264,7 +265,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         }
                         if (!value.endsWith('.png') &&
                             !value.endsWith('.jpeg') &&
-                            !value.endsWith('.CAU') &&
+                            !value.endsWith('=CAU') &&
                             !value.endsWith('.jpg')) {
                           return 'Please enter a valid Image URL';
                         }

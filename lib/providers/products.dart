@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'product.dart';
 
 class Products with ChangeNotifier {
@@ -32,7 +35,8 @@ class Products with ChangeNotifier {
       title: 'A Pan',
       description: 'Prepare any meal you want.',
       price: 49.99,
-      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ];
 
@@ -66,6 +70,21 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
+    var url = Uri.https(
+      'flutter-shop-aaf22-default-rtdb.firebaseio.com',
+      '/products.json',
+    );
+    http.post(
+      url,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'isFavourite': product.isFavourite,
+      }),
+    );
+
     final newProduct = Product(
       title: product.title,
       description: product.description,

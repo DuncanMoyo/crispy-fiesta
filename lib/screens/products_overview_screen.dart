@@ -21,30 +21,35 @@ class ProductsOverviewScreen extends StatefulWidget {
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavourites = false;
   var _isInit = true;
+  var _isLoading = false;
 
   @override
   void initState() {
     // Provider.of<Products>(context).fetchAndSetProducts(); wont work unless if you have listen to false
-    // ||||||||||||||||||||OR|||||||||||||||||| 
+    // ||||||||||||||||||||OR||||||||||||||||||
     // Future.delayed(Duration.zero).then((_) {
-    //   Provider.of<Products>(context).fetchAndSetProducts(); 
+    //   Provider.of<Products>(context).fetchAndSetProducts();
     // });
-     super.initState();
+    super.initState();
   }
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      Provider.of<Products>(context).fetchAndSetProducts(); 
-
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
-    _isInit = false;  
+    _isInit = false;
     super.didChangeDependencies();
   }
 
-
   @override
-
   Widget build(BuildContext context) {
     // final productsContainer = Provider.of<Products>(context);
     return Scaffold(
@@ -87,7 +92,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               value: cart.itemCount.toString(),
             ),
             child: IconButton(
-              icon: Icon(Icons.shopping_cart,),
+              icon: Icon(
+                Icons.shopping_cart,
+              ),
               onPressed: () {
                 Navigator.of(context).pushNamed(
                   CartScreen.routeName,
@@ -98,7 +105,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ProductsGrid(_showOnlyFavourites),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ProductsGrid(_showOnlyFavourites),
     );
   }
 }

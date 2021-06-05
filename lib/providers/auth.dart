@@ -9,7 +9,11 @@ class Auth with ChangeNotifier {
   bool returnSecureToken;
 
   Future<void> signup(String email, String password) async {
-    var url = Uri.https('identitytoolkit.googleapis.com','/v1/accounts:signInWithCustomToken', {'key' :'{AIzaSyDGmIK7jQi11qfdn3lE3_qlBHu42wTGWMw}'});
+    var url = Uri.https(
+      'identitytoolkit.googleapis.com',
+      '/v1/accounts:signUp',
+      {'key': 'AIzaSyDGmIK7jQi11qfdn3lE3_qlBHu42wTGWMw'},
+    );
     final response = await http.post(
       url,
       body: json.encode({
